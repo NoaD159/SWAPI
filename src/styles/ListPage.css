@@ -1,0 +1,66 @@
+.listPagePaper {
+  background-image: url(https://media.istockphoto.com/id/178149253/photo/deep-space-background.jpg?s=612x612&w=0&k=20&c=w1hb2H1C-blV918LoG9mGB02nJY6cLJpR5Szfg7sLqE=);
+}
+
+.entityTitle {
+  color: gold;
+  padding: 1rem 0;
+  text-align: center;
+}
+
+.tableHeaders {
+  font-size: large !important;
+  font-weight: 600 !important;
+  color: gray !important;
+  text-align: center !important;
+}
+
+.tacleCells {
+  text-align: center !important;
+  color: white !important;
+}
+
+.iconButton {
+  color: antiquewhite !important;
+}
+
+.createButton {
+  border: 1px solid antiquewhite !important;
+  margin: 1rem !important;
+  padding: 1rem !important;
+  left: 80%;
+}
+
+@media only screen and (max-width: 600px) {
+  table {
+    /* display: block;
+    overflow-x: auto;
+    white-space: nowrap; */
+  }
+
+  table thead,
+  table tbody,
+  table th,
+  table td,
+  table tr {
+    display: block;
+  }
+
+  table tbody td,
+  table tbody th,
+  table thead th {
+    text-align: center;
+  }
+  .tableHeaders {
+    font-size: small !important;
+    font-weight: 400 !important;
+    text-align: center !important;
+  }
+
+  table tbody td:before {
+    content: attr(data-label);
+
+    font-weight: bold;
+    margin-right: 0.5em;
+  }
+}

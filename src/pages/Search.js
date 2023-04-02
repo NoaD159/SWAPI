@@ -1,35 +1,19 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import {
-  TextField,
-  Popover,
-  Box,
-  IconButton,
-  InputAdornment,
-} from "@mui/material";
+import { TextField, Popover, Box, InputAdornment } from "@mui/material";
 import SearchResultPopup from "../components/SearchResultPopup";
 import "../styles/Search.css";
 import SearchIcon from "@mui/icons-material/Search";
 
-function Search() {
+function Search({ entities }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState({});
   const [showPopup, setShowPopup] = useState(false);
   const searchInputRef = useRef(null);
 
-  const entities = [
-    "films",
-    "people",
-    "planets",
-    "species",
-    "starships",
-    "vehicles",
-  ];
-
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
       if (searchTerm) {
-        // loop over all entities and send requests to the API
         Promise.all(
           entities.map((entity) =>
             axios.get(`https://swapi.dev/api/${entity}/?search=${searchTerm}`)
@@ -42,13 +26,14 @@ function Search() {
             filteredResults[entityName] = result.data.results;
           });
           setSearchResults(filteredResults);
+          console.log(searchResults);
           setShowPopup(true);
         });
       } else {
         setSearchResults([]);
         setShowPopup(false);
       }
-    }, 100);
+    }, 200);
 
     return () => clearTimeout(debounceTimeout);
   }, [searchTerm]);
@@ -74,20 +59,13 @@ function Search() {
         value={searchTerm}
         onChange={handleInputChange}
         inputRef={searchInputRef}
-        sx={{
-          border: "solid 3px rgb(88, 88, 209)",
-          borderRadius: "15px",
-          width: "45%",
-          "&::placeholder": {
-            color: "grey",
-          },
-        }}
         inputProps={{
           style: { color: "rgb(182, 177, 177)" },
         }}
       />
       <Popover
         open={showPopup}
+        className="searchPopup"
         anchorEl={searchInputRef.current}
         anchorReference="anchorEl"
         onClose={() => setShowPopup(false)}
@@ -98,11 +76,6 @@ function Search() {
         transformOrigin={{
           vertical: "top",
           horizontal: "center",
-        }}
-        style={{
-          maxHeight: "450px",
-          marginLeft: "10%",
-          marginTop: "1rem",
         }}
         disableAutoFocus
       >
@@ -119,13 +92,6 @@ function Search() {
       <Box
         className="starsWarsImg"
         component="img"
-        sx={{
-          width: "50%",
-          marginLeft: "25%",
-          marginTop: "3rem",
-          display: "block",
-          opacity: "0.5",
-        }}
         alt="star wars poster"
         src="https://assets-prd.ignimgs.com/2022/05/25/starwarssaga-blogroll-1653501853399.jpg"
       />

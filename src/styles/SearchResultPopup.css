@@ -3,3 +3,14 @@
   width: fit-content;
   margin: 0;
 }
+
+.viewAllButton {
+  font-size: medium !important;
+  padding: 0 1rem !important;
+  left: 50% !important;
+  text-decoration: none !important;
+}
+
+/* .viewAllIcon {
+  margin-left: 1rem !important;
+} */

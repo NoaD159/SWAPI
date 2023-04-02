@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { List, ListItem, ListItemText, IconButton } from "@mui/material";
 import { RemoveRedEye } from "@mui/icons-material";
 import "../styles/SearchResultPopup.css";
@@ -18,11 +19,11 @@ function SearchResultPopup({ results, entity }) {
           </ListItem>
         ))}
       </List>
-      <IconButton
-        style={{ fontSize: "medium", padding: " 0 1rem", left: "50%" }}
-      >
-        View All <RemoveRedEye style={{ marginLeft: "1rem" }} />{" "}
-      </IconButton>
+      <Link to={`/${entity}`}>
+        <IconButton className="viewAllButton">
+          View All <RemoveRedEye className="viewAllIcon" />
+        </IconButton>
+      </Link>
     </div>
   );
 }
