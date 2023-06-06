@@ -59,7 +59,7 @@ function App() {
         <CSSTransition key={location.key} classNames="fade" timeout={300}>
           <Routes>
             <Route exact path="/" element={<Search entities={entities} />} />
-            {/* <Route exact path="/films" /> */}
+
             {entitiesInfo.map((entity) => (
               <Route
                 key={entity.entityName}
@@ -67,7 +67,6 @@ function App() {
                 element={<ListPage entity={entity} />}
               />
             ))}
-            {/* <Route path="/films" element={<ListPage />} /> */}
           </Routes>
         </CSSTransition>
       </TransitionGroup>

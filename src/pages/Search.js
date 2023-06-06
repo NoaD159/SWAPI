@@ -8,12 +8,12 @@ import SearchIcon from "@mui/icons-material/Search";
 function Search({ entities }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState({});
-  const [showPopup, setShowPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(searchTerm.length > 1);
   const searchInputRef = useRef(null);
 
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
-      if (searchTerm) {
+      if (searchTerm && searchTerm.length > 1) {
         Promise.all(
           entities.map((entity) =>
             axios.get(`https://swapi.dev/api/${entity}/?search=${searchTerm}`)
@@ -26,7 +26,6 @@ function Search({ entities }) {
             filteredResults[entityName] = result.data.results;
           });
           setSearchResults(filteredResults);
-          console.log(searchResults);
           setShowPopup(true);
         });
       } else {
@@ -44,15 +43,16 @@ function Search({ entities }) {
 
   return (
     <div className="Search">
-      <h1 className="searchHead">Search the magical world of Star Wars</h1>
+      <h1 className="search-head">Search the magical world of Star Wars</h1>
       <TextField
-        className="searchInput"
+        className="search-input"
         type="text"
         placeholder="Search"
         InputProps={{
+          maxLength: 20,
           startAdornment: (
             <InputAdornment position="start">
-              <SearchIcon />
+              <SearchIcon className="search-icon" />
             </InputAdornment>
           ),
         }}
@@ -60,12 +60,12 @@ function Search({ entities }) {
         onChange={handleInputChange}
         inputRef={searchInputRef}
         inputProps={{
-          style: { color: "rgb(182, 177, 177)" },
+          style: { color: " rgba(234, 234, 19,0.8)" },
         }}
       />
       <Popover
         open={showPopup}
-        className="searchPopup"
+        className="search-popup"
         anchorEl={searchInputRef.current}
         anchorReference="anchorEl"
         onClose={() => setShowPopup(false)}
@@ -77,9 +77,17 @@ function Search({ entities }) {
           vertical: "top",
           horizontal: "center",
         }}
+        PaperProps={{
+          style: {
+            width: searchInputRef.current?.clientWidth || "auto",
+            minWidth: "unset",
+            maxWidth: "unset",
+            whiteSpace: "nowrap",
+          },
+        }}
         disableAutoFocus
       >
-        <div className="resultPopup">
+        <div className="result-popup">
           {entities.map((entity) => (
             <SearchResultPopup
               key={entity}
@@ -87,10 +95,18 @@ function Search({ entities }) {
               results={searchResults[entity] || []}
             />
           ))}
+          {searchTerm &&
+            Object.values(searchResults).every(
+              (results) => results.length === 0
+            ) && (
+              <div>
+                <p className="no-result-popup">- No Matching Results -</p>
+              </div>
+            )}
         </div>
       </Popover>
       <Box
-        className="starsWarsImg"
+        className="starsWars-img"
         component="img"
         alt="star wars poster"
         src="https://assets-prd.ignimgs.com/2022/05/25/starwarssaga-blogroll-1653501853399.jpg"

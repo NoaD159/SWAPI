@@ -1,19 +1,19 @@
-.dialogHead {
+.dialog-head {
   background-color: rgb(185, 217, 235);
 }
 
-.dialogContent {
+.dialog-content {
   margin-top: 1rem;
 }
 
-.textField {
+.text-field {
   margin: 0.5rem;
 }
 
-.cancelButton {
+.cancel-button {
   background-color: blanchedalmond;
 }
 
-.submitButton {
+.submit-button {
   background-color: rgb(170, 206, 249);
 }

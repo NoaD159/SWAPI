@@ -26,13 +26,13 @@ function EditDialog({ open, close, attributes, data, handleEditItem, id }) {
   return (
     <div>
       <Dialog open={open} onClose={close}>
-        <DialogTitle className="dialogHead">Edit</DialogTitle>
-        <DialogContent className="dialogContent">
+        <DialogTitle className="dialog-head">Edit</DialogTitle>
+        <DialogContent className="dialog-content">
           {attributes.map((attribute) => (
             <TextField
               required
               key={attribute}
-              className="textField"
+              className="text-field"
               label={attribute}
               inputProps={{ maxLength: 15 }}
               value={editedData ? editedData[attribute] : ""}
@@ -41,10 +41,10 @@ function EditDialog({ open, close, attributes, data, handleEditItem, id }) {
           ))}
         </DialogContent>
         <DialogActions>
-          <Button onClick={() => handleEdit()} className="submitButton">
+          <Button onClick={() => handleEdit()} className="submit-button">
             Save
           </Button>
-          <Button onClick={() => close()} className="cancelButton">
+          <Button onClick={() => close()} className="cancel-b utton">
             Cancel
           </Button>
         </DialogActions>

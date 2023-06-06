@@ -21,7 +21,7 @@ import DeleteDialog from "../components/DeleteDialog";
 import "../styles/ListPage.css";
 
 function ListPage({ entity }) {
-  const items = useSelector((state) => state.items);
+  // const items = useSelector((state) => state.items);
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
@@ -97,54 +97,13 @@ function ListPage({ entity }) {
 
   return (
     <Box>
-      <Paper className="listPagePaper">
-        <Typography className="entityTitle" variant="h2">
+      <Paper className="list-page-paper">
+        <Typography className="entity-title" variant="h2">
           {entity.title}
         </Typography>
-
-        <Table className="responsiveTable">
-          <TableHead>
-            <TableRow>
-              {entity.attributes.map((header) => (
-                <TableCell key={header} className="tableHeaders">
-                  {header.toUpperCase()}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {data.map((result) => (
-              <TableRow key={result.id}>
-                {entity.attributes.map((header) => (
-                  <TableCell key={header} className="tacleCells">
-                    {result[header]}
-                  </TableCell>
-                ))}
-                <TableCell>
-                  <IconButton
-                    onClick={() => openEditDialog(result)}
-                    className="iconButton"
-                  >
-                    <Edit />
-                  </IconButton>
-                  {/* <IconButton
-                    onClick={() => handleDeleteItem(result.id)}
-                    className="iconButton"
-                  > */}
-                  <IconButton
-                    onClick={() => openDeleteDialog(result)}
-                    className="iconButton"
-                  >
-                    <Delete />
-                  </IconButton>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
         <IconButton
           onClick={openCreateForm}
-          className="iconButton createButton"
+          className="icon-button create-button"
         >
           <Add /> Add
         </IconButton>
@@ -154,6 +113,46 @@ function ListPage({ entity }) {
           attributes={entity.attributes}
           handleCreateItem={handleCreateItem}
         />
+        <Table className="responsiveTable">
+          <TableHead>
+            <TableRow>
+              {entity.attributes.map((header) => (
+                <TableCell key={header} className="table-headers">
+                  {header
+                    .split("_")
+                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(" ")}
+                </TableCell>
+              ))}
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {data.map((result) => (
+              <TableRow key={result.id}>
+                {entity.attributes.map((header) => (
+                  <TableCell key={header} className="table-cells">
+                    {result[header]}
+                  </TableCell>
+                ))}
+                <TableCell>
+                  <IconButton
+                    onClick={() => openEditDialog(result)}
+                    className="icon-button"
+                  >
+                    <Edit />
+                  </IconButton>
+
+                  <IconButton
+                    onClick={() => openDeleteDialog(result)}
+                    className="icon-button"
+                  >
+                    <Delete />
+                  </IconButton>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
       </Paper>
       <EditDialog
         open={isEditDialogOpen}

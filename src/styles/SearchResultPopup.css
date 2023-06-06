@@ -1,16 +1,16 @@
-.searchResultHead {
-  background-color: #c5c5ee;
+.search-result-head {
+  color: #6161cc;
   width: fit-content;
   margin: 0;
 }
 
-.viewAllButton {
-  font-size: medium !important;
-  padding: 0 1rem !important;
-  left: 50% !important;
-  text-decoration: none !important;
+button.view-all-button {
+  font-size: medium;
+  padding: 0 1rem;
+  left: 50%;
+  text-decoration: none;
 }
 
-/* .viewAllIcon {
-  margin-left: 1rem !important;
-} */
+svg.view-all-icon {
+  margin-left: 0.5rem;
+}
