@@ -1,17 +1,10 @@
 import { Routes, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
+import Navbar from "./components/Navbar";
 import Search from "./pages/Search";
 import ListPage from "./pages/ListPage";
 import "./styles/App.css";
 
-const entities = [
-  "films",
-  "people",
-  "planets",
-  "species",
-  "starships",
-  "vehicles",
-];
 const entitiesInfo = [
   {
     entityName: "films",
@@ -55,10 +48,16 @@ function App() {
   const location = useLocation();
   return (
     <div className="App">
+      <Navbar entities={entitiesInfo} />
+
       <TransitionGroup>
         <CSSTransition key={location.key} classNames="fade" timeout={300}>
           <Routes>
-            <Route exact path="/" element={<Search entities={entities} />} />
+            <Route
+              exact
+              path="/"
+              element={<Search entities={entitiesInfo} />}
+            />
 
             {entitiesInfo.map((entity) => (
               <Route

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { TextField, Popover, Box, InputAdornment } from "@mui/material";
 import SearchResultPopup from "../components/SearchResultPopup";
@@ -9,20 +9,22 @@ function Search({ entities }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState({});
   const [showPopup, setShowPopup] = useState(searchTerm.length > 1);
-  const searchInputRef = useRef(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
       if (searchTerm && searchTerm.length > 1) {
         Promise.all(
           entities.map((entity) =>
-            axios.get(`https://swapi.dev/api/${entity}/?search=${searchTerm}`)
+            axios.get(
+              `https://swapi.dev/api/${entity.entityName}/?search=${searchTerm}`
+            )
           )
         ).then((results) => {
           const filteredResults = {};
 
           results.forEach((result, index) => {
-            const entityName = entities[index];
+            const entityName = entities[index].entityName;
             filteredResults[entityName] = result.data.results;
           });
           setSearchResults(filteredResults);
@@ -35,10 +37,11 @@ function Search({ entities }) {
     }, 200);
 
     return () => clearTimeout(debounceTimeout);
-  }, [searchTerm]);
+  }, [searchTerm, entities]);
 
   const handleInputChange = (event) => {
     setSearchTerm(event.target.value);
+    setAnchorEl(event.currentTarget);
   };
 
   return (
@@ -58,7 +61,6 @@ function Search({ entities }) {
         }}
         value={searchTerm}
         onChange={handleInputChange}
-        inputRef={searchInputRef}
         inputProps={{
           style: { color: " rgba(234, 234, 19,0.8)" },
         }}
@@ -66,33 +68,28 @@ function Search({ entities }) {
       <Popover
         open={showPopup}
         className="search-popup"
-        anchorEl={searchInputRef.current}
-        anchorReference="anchorEl"
         onClose={() => setShowPopup(false)}
+        anchorEl={anchorEl}
+        anchorReference="anchorEl"
         anchorOrigin={{
           vertical: "bottom",
-          horizontal: "left",
+          horizontal: "center",
         }}
         transformOrigin={{
           vertical: "top",
           horizontal: "center",
         }}
         PaperProps={{
-          style: {
-            width: searchInputRef.current?.clientWidth || "auto",
-            minWidth: "unset",
-            maxWidth: "unset",
-            whiteSpace: "nowrap",
-          },
+          className: "popover-paper",
         }}
         disableAutoFocus
       >
         <div className="result-popup">
           {entities.map((entity) => (
             <SearchResultPopup
-              key={entity}
-              entity={entity}
-              results={searchResults[entity] || []}
+              key={entity.entityName}
+              entity={entity.title}
+              results={searchResults[entity.entityName] || []}
             />
           ))}
           {searchTerm &&

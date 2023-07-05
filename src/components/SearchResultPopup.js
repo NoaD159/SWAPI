@@ -12,7 +12,7 @@ function SearchResultPopup({ results, entity }) {
     return null;
   }
   return (
-    <div style={{ width: "100%" }}>
+    <div>
       <h3 className="search-result-head">{entityName}</h3>
       <List>
         {results.slice(0, 3).map((result, index) => (

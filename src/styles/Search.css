@@ -25,15 +25,17 @@ div.search-input {
 }
 .search-popup {
   max-height: 450px;
-  margin-left: 20%;
-  margin-top: 0.2rem;
 }
 
 .result-popup {
-  /* width: 100%; */
-  /* max-width: 500px; */
   padding: 20px;
   background-color: rgb(225, 237, 242);
+}
+
+.popover-paper {
+  width: 40%;
+  margin-left: -2%;
+  margin-top: 0.5rem;
 }
 
 .starsWars-img {

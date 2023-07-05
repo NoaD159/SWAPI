@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { v4 as uuid } from "uuid";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { editItem, deleteItem, addItem } from "../redux/reducer";
 import {
   Box,
@@ -21,7 +21,6 @@ import DeleteDialog from "../components/DeleteDialog";
 import "../styles/ListPage.css";
 
 function ListPage({ entity }) {
-  // const items = useSelector((state) => state.items);
   const dispatch = useDispatch();
 
   const [data, setData] = useState([]);
@@ -99,7 +98,7 @@ function ListPage({ entity }) {
     <Box>
       <Paper className="list-page-paper">
         <Typography className="entity-title" variant="h2">
-          {entity.title}
+          {entity.title.charAt(0).toUpperCase() + entity.title.slice(1)}
         </Typography>
         <IconButton
           onClick={openCreateForm}
@@ -120,7 +119,11 @@ function ListPage({ entity }) {
                 <TableCell key={header} className="table-headers">
                   {header
                     .split("_")
-                    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                    .map(
+                      (entityHeader) =>
+                        entityHeader.charAt(0).toUpperCase() +
+                        entityHeader.slice(1)
+                    )
                     .join(" ")}
                 </TableCell>
               ))}

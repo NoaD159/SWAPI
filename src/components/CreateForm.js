@@ -29,25 +29,29 @@ function CreateForm({ attributes, open, close, handleCreateItem }) {
   return (
     <div>
       <Dialog open={open} onClose={close}>
-        <DialogTitle className="dialogHead">Create New Item</DialogTitle>
-        <DialogContent className="dialogContent">
+        <DialogTitle className="dialog-head">Create New Item</DialogTitle>
+        <DialogContent className="dialog-content">
           {attributes.map((attribute) => (
             <TextField
               required
               key={attribute}
-              className="textField"
-              label={attribute}
+              className="text-field-form"
+              label={attribute
+                .split("_")
+                .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+                .join(" ")}
               inputProps={{ maxLength: 15 }}
               value={newItem[attribute]}
               onChange={(e) => handleChange(attribute, e.target.value)}
+              sx={{ margin: "0.3rem" }}
             />
           ))}
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSubmit} className="submitButton">
+          <Button onClick={handleSubmit} className="submit-button">
             Save
           </Button>
-          <Button onClick={() => close()} className="cancelButton">
+          <Button onClick={() => close()} className="cancel-button">
             Cancel
           </Button>
         </DialogActions>
