@@ -48,7 +48,7 @@ function Navbar({ entities }) {
               }}
             >
               <NavLink to="/" className="link">
-                <Search className="search-icon" /> Search
+                Search
               </NavLink>
               {entities.map((entity) => {
                 const capitalizedTitle =
